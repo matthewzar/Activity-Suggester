@@ -1,0 +1,23 @@
+{
+  "name": "Glia-take-home-project",
+  "version": "1.0.0",
+  "description": "A short live takehome project. This repo will be made private within 2 weeks of creation.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matthewzar/activity_suggester.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matthewzar/activity_suggester/issues"
+  },
+  "homepage": "https://github.com/matthewzar/activity_suggester#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
