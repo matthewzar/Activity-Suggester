@@ -1,7 +1,7 @@
 import express from 'express';
 import { formatActivityResponse } from './serverUtils.js';
 
-class Server {
+export class Server {
     constructor(profileManager, activityFetcher) {
         this.app = express();
         this.activityFetcher = activityFetcher
@@ -63,5 +63,3 @@ class Server {
         this.app.listen(port, callback);
     }
 }
-
-export default Server;
