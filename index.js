@@ -1,10 +1,12 @@
 import url from 'url';
 import Server from './server.js';
-import { InMemoryUserProfileManager } from './UserProfileManager.js';
+import { InMemoryUserProfileManager } from './userProfileManager.js';
+import { RemoteActivityFetcher } from './activityFetcher.js';
 
 // Inject a more persistent DB type for actual deployment
 const profileManager = new InMemoryUserProfileManager();
-const server = new Server(profileManager);
+const activityFetcher = new RemoteActivityFetcher();
+const server = new Server(profileManager, activityFetcher);
 
 const currentFileUrl = import.meta.url;
 const expectedFileUrl = url.pathToFileURL(process.argv[1]).href;

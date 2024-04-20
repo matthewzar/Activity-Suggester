@@ -1,12 +1,10 @@
 import express from 'express';
-import {
-    getActivityForUser,
-    formatActivityResponse
-} from './serverUtils.js';
+import { formatActivityResponse } from './serverUtils.js';
 
 class Server {
-    constructor(profileManager) {
+    constructor(profileManager, activityFetcher) {
         this.app = express();
+        this.activityFetcher = activityFetcher
         this.profileManager = profileManager;
         this.configureMiddleware();
         this.setupRoutes();
@@ -43,11 +41,11 @@ class Server {
             // Attempt to retrieve the current user's profile
             const currentUser = this.profileManager.getLastUserProfile();
             if (!currentUser) {
-                return res.status(402).send('No user profiles available');
+                return res.status(404).send('No user profiles available');
             }
     
             // Fetch an activity based on the current user's preferences
-            const activity = await getActivityForUser(currentUser);
+            const activity = await this.activityFetcher.getActivityForUser(currentUser);
             res.json(formatActivityResponse(activity));
         } catch (error) {
             // Differentiate between a 'no activity' error and other types of exceptions

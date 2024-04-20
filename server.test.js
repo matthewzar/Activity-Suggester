@@ -1,20 +1,22 @@
 import request from 'supertest';
 import Server from './server';
-import { InMemoryUserProfileManager } from './UserProfileManager';
+import { InMemoryUserProfileManager } from './userProfileManager';
+import { MockActivityFetcher } from './activityFetcher';
 
 describe('Server Functionality', () => {
-    // Not a true mock, but simple enough to work as one.
-    let profileManager = new InMemoryUserProfileManager();
-    const server = new Server(profileManager);
-    let app = server.app;
+    let profileManager;
+    let mockActivityFetcher;
+    let server;
+    let app;
 
     beforeEach(() => {
+        // Not a true mock, but simple enough to work as one.
+        profileManager = new InMemoryUserProfileManager();
+        mockActivityFetcher = new MockActivityFetcher();
+        server = new Server(profileManager, mockActivityFetcher);
+        app = server.app;
         profileManager.clearProfiles();
     });
-
-    afterEach(() => {
-        jest.restoreAllMocks();
-      });
 
     describe('POST /user endpoint', () => {
         it('should create a user and return 201', async () => {
@@ -49,16 +51,16 @@ describe('Server Functionality', () => {
     });
 
     describe('GET /activity endpoint', () => {
-        // TODO - fix thsi flaky test. Responses in getActivityForUser from bored api may not be consistent, that dependency needs to be mocked away
-        it('should return an activity if a user profile exists', async () => {           
-            profileManager.addUserProfile('Alice', 'High', 'Free'); 
+        it('should return an activity if a user profile exists', async () => {
+            const userData = { name: 'Alice', accessibility: 'High', price: 'Free' };
+            profileManager.addUserProfile(userData.name, userData.accessibility, userData.price);
+            mockActivityFetcher.setResponseForUser(userData, { activity: 'Skydiving' });
 
             const response = await request(app)
                 .get('/activity')
                 .expect(200);
 
-            // expand this to test actual data if the mock can specify it
-            expect(response.body).toHaveProperty('activity');
+            expect(response.body).toHaveProperty('activity', 'Skydiving');
         });
 
         it('should return 404 if no user profiles are available', async () => {
@@ -72,7 +74,7 @@ describe('Server Functionality', () => {
         it('should handle errors properly when fetching activities fails', async () => {
             profileManager.addUserProfile('Bob', 'Medium', 'Low');
                     
-            jest.spyOn(profileManager, 'getLastUserProfile').mockImplementation(() => {
+            jest.spyOn(mockActivityFetcher, 'getActivityForUser').mockImplementation(() => {
                 throw new Error('No suitable activity found');
             });
         

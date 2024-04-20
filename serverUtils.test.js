@@ -1,43 +1,11 @@
-import axios from 'axios';
 import {
-    getActivityForUser,
     findSuitableActivity,
     formatActivityResponse,
     mapAccessibility,
     mapPrice
 } from './serverUtils';
 
-jest.mock('axios');
-
 describe('serverUtils', () => {
-    describe('getActivityForUser', () => {
-        it('returns a suitable activity when found', async () => {
-            const mockUser = { accessibility: 'High', price: 'Free' };
-            const mockActivity = {
-                accessibility: 0.2,
-                price: 0,
-                activity: 'Reading'
-            };
-            axios.get.mockResolvedValue({ data: mockActivity });
-            const activity = await getActivityForUser(mockUser);
-            expect(activity).toEqual(mockActivity);
-        });
-
-        it('throws an error when no suitable activity is found', async () => {
-            const mockUser = { accessibility: 'Low', price: 'High' };
-            const mockActivities = {
-                data: {
-                    accessibility: 0.1,
-                    price: 0,
-                    activity: 'Reading'
-                }
-            };
-            axios.get.mockResolvedValue(mockActivities);
-
-            await expect(getActivityForUser(mockUser)).rejects.toThrow('No suitable activity found');
-        });
-    });
-
     describe('findSuitableActivity', () => {
         it('finds and returns the activity matching user preferences', () => {
             const activities = [

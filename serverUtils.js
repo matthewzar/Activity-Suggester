@@ -1,23 +1,7 @@
-import axios from 'axios';
-
-export async function getActivityForUser(user) {
-    const response = await axios.get('https://www.boredapi.com/api/activity');
-    const activities = [response.data];
-    const suitableActivity = findSuitableActivity(activities, user);
-    if (!suitableActivity) {
-        throw new Error('No suitable activity found');
-    }
-    return suitableActivity;
-}
-
 export function findSuitableActivity(activities, user) {
-    console.log("Activities: ", activities);  // Debug log
-    console.log("User: ", user);  // Debug log
     return activities.find(activity => {
         const activityAccessibility = mapAccessibility(activity.accessibility);
         const activityPrice = mapPrice(activity.price);
-        console.log("Mapped Accessibility: ", activityAccessibility);  // Debug log
-        console.log("Mapped Price: ", activityPrice);  // Debug log
         return activityAccessibility === user.accessibility && activityPrice === user.price;
     });
 }
