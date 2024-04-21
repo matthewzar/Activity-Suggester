@@ -2,12 +2,58 @@
 
 A short live takehome project. This repo will be made private within 2 weeks of creation.
 
+### Problem Description
+
+Level 1: Create a REST API server to suggest a random activity
+- Create an Express.js REST API to act as a standalone server with its own port.
+- Create a GET endpoint called activity which:
+  - Takes any response from Bored API /api/activity endpoint
+  - Maps the “accessibility” of the response to
+    - “High” when accessibility <= 0.25
+    - “Medium” when 0.25 < accessibility <= 0.75
+    - “Low” when accessibility > 0.75
+  - Maps the “price’ of the response to
+    - “Free” when price = 0
+    - “Low” when price <= 0.5
+    - “High” when price > 0.5
+
+Sample GET /activity response:
+```json
+{
+  "activity": "Learn Express.js",
+  "accessibility": "High",
+  "type": "education",
+  "participants": 1,
+  "price": "Low",
+  "link": "https://expressjs.com/",
+  "key": "3943506"
+}
+```
+
+Level 2: Create an endpoint to store user profile
+- Create a POST endpoint called user which:
+  - Takes “name”, “accessibility” (High, Medium, or Low), and “price” (Free, Low, or High) in JSON format
+  - Stores the user profile in a mock DB, feel free to use any DB of your choice.
+
+Once a user profile has been created, the /activity endpoint should now only return activities that fit the user’s requirements. For example, the /activity endpoint should return an activity with accessibility “High” and price “Low” if the current user’s profile has accessibility “High” and price “Low”.
+
+For simplicity, assume that the last saved user is the current user.
+Sample POST /user request:
+
+```json
+{
+  "name": "John",
+  "accessibility": "High",
+  "price": "Free"
+}
+```
+
 ## Assumptions
 
 - External API Reliability: I assumed that the Bored API is consistently available and reliable. The system assumes that the API will return valid and expected data structures every time a request is made.
-  * This assumption does not hold for unit testing. I've decoupled from BoredAPI via an injected activity-fetcher service.
+  - This assumption does not hold for unit testing. I've decoupled from BoredAPI via an injected activity-fetcher service.
 - Simplistic Persistence: I assumed that in the interest of time a simple in-memory persistence mechanism (a mock database) which resets when the server restarts would be addequate.
-  * This service was also decoupled to allow for easy replacement.
+  - This service was also decoupled to allow for easy replacement.
 - Environment: This was developed on a Windows system with Node installed, and has not been tested elsewhere.
 - Security: Given the scope of the project, security was not taken into consideration.
 - Performance: Given the scope of the project, nothing has been delieberately performance-optimised.
@@ -27,7 +73,7 @@ A short live takehome project. This repo will be made private within 2 weeks of 
 ## Running the service
 
 - For development: `npm run dev` to start server with babel-node.
-  * This will start the server on `http://localhost:3000`. 
+  - This will start the server on `http://localhost:3000`. 
 - For testing: `npm test`.
 - For production builds: `npm run build` to generate a production-ready (ish) version.
 
@@ -50,7 +96,7 @@ body, raw JSON:
 
 ### Getting an activity:
 
-Since this endpoint reacts based on the last posted user profile, make sure to use/test it after posting adding a user profile to see how it filters activities.
+Since this endpoint reacts based on the last posted user profile, make sure to only use (or test) it after adding a user profile to see how it filters activities.
 
 GET -> http://localhost:3000/activity
 
