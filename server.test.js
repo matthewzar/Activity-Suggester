@@ -1,7 +1,7 @@
 import request from 'supertest';
-import { Server } from './server';
-import { InMemoryUserProfileManager } from './userProfileManager';
-import { MockActivityFetcher } from './activityFetcher';
+import { Server } from './server.js';
+import { InMemoryUserProfileManager } from './userProfileManager.js';
+import { MockActivityFetcher } from './activityFetcher.js';
 
 describe('Server Functionality', () => {
     let profileManager;

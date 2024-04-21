@@ -7,20 +7,20 @@ export function findSuitableActivity(activities, user) {
 }
 
 export function formatActivityResponse(activity) {
-    // return { 
-    //     ...activity,  
-    //     accessibility: mapAccessibility(activity.accessibility),
-    //     price: mapPrice(activity.price),
-    // };
-    return {
-        activity: activity.activity,
+    return { 
+        ...activity,  
         accessibility: mapAccessibility(activity.accessibility),
-        type: activity.type,
-        participants: activity.participants,
         price: mapPrice(activity.price),
-        link: activity.link,
-        key: activity.key
     };
+    // return {
+    //     activity: activity.activity,
+    //     accessibility: mapAccessibility(activity.accessibility),
+    //     type: activity.type,
+    //     participants: activity.participants,
+    //     price: mapPrice(activity.price),
+    //     link: activity.link,
+    //     key: activity.key
+    // };
 }
 
 export function mapAccessibility(accessibility) {

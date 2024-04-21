@@ -3,7 +3,7 @@ import {
     formatActivityResponse,
     mapAccessibility,
     mapPrice
-} from './serverUtils';
+} from './serverUtils.js';
 
 describe('serverUtils', () => {
     describe('findSuitableActivity', () => {

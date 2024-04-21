@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { RemoteActivityFetcher } from './activityFetcher';
-import { findSuitableActivity } from './serverUtils';
+import { RemoteActivityFetcher } from './activityFetcher.js';
+import { findSuitableActivity } from './serverUtils.js';
 
 jest.mock('axios');
 jest.mock('./serverUtils');
