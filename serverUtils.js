@@ -7,6 +7,11 @@ export function findSuitableActivity(activities, user) {
 }
 
 export function formatActivityResponse(activity) {
+    // return { 
+    //     ...activity,  
+    //     accessibility: mapAccessibility(activity.accessibility),
+    //     price: mapPrice(activity.price),
+    // };
     return {
         activity: activity.activity,
         accessibility: mapAccessibility(activity.accessibility),

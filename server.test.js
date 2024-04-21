@@ -1,5 +1,5 @@
 import request from 'supertest';
-import Server from './server';
+import { Server } from './server';
 import { InMemoryUserProfileManager } from './userProfileManager';
 import { MockActivityFetcher } from './activityFetcher';
 

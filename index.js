@@ -1,5 +1,5 @@
 import url from 'url';
-import Server from './server.js';
+import { Server } from './server.js';
 import { InMemoryUserProfileManager } from './userProfileManager.js';
 import { RemoteActivityFetcher } from './activityFetcher.js';
 

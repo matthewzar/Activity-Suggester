@@ -18,6 +18,7 @@ export class RemoteActivityFetcher extends IActivityFetcher {
         const response = await axios.get(this.url);
         const activities = [response.data];
         const suitableActivity = findSuitableActivity(activities, user);
+        // NOTE: we could put retry logic to decrease the odds of this error happening
         if (!suitableActivity) {
             throw new Error('No suitable activity found');
         }
