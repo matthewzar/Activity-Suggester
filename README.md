@@ -8,14 +8,14 @@ Level 1: Create a REST API server to suggest a random activity
 - Create an Express.js REST API to act as a standalone server with its own port.
 - Create a GET endpoint called activity which:
   - Takes any response from Bored API /api/activity endpoint
-  - Maps the “accessibility” of the response to
-    - “High” when accessibility <= 0.25
-    - “Medium” when 0.25 < accessibility <= 0.75
-    - “Low” when accessibility > 0.75
-  - Maps the “price’ of the response to
-    - “Free” when price = 0
-    - “Low” when price <= 0.5
-    - “High” when price > 0.5
+  - Maps the "accessibility" of the response to
+    - "High" when accessibility <= 0.25
+    - "Medium" when 0.25 < accessibility <= 0.75
+    - "Low" when accessibility > 0.75
+  - Maps the "price" of the response to
+    - "Free" when price = 0
+    - "Low" when price <= 0.5
+    - "High" when price > 0.5
 
 Sample GET /activity response:
 ```json
@@ -32,10 +32,10 @@ Sample GET /activity response:
 
 Level 2: Create an endpoint to store user profile
 - Create a POST endpoint called user which:
-  - Takes “name”, “accessibility” (High, Medium, or Low), and “price” (Free, Low, or High) in JSON format
+  - Takes "name", "accessibility" (High, Medium, or Low), and "price" (Free, Low, or High) in JSON format
   - Stores the user profile in a mock DB, feel free to use any DB of your choice.
 
-Once a user profile has been created, the /activity endpoint should now only return activities that fit the user’s requirements. For example, the /activity endpoint should return an activity with accessibility “High” and price “Low” if the current user’s profile has accessibility “High” and price “Low”.
+Once a user profile has been created, the /activity endpoint should now only return activities that fit the user’s requirements. For example, the /activity endpoint should return an activity with accessibility "High" and price "Low" if the current user’s profile has accessibility "High" and price "Low".
 
 For simplicity, assume that the last saved user is the current user.
 Sample POST /user request:
