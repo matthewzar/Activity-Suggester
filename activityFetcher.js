@@ -49,9 +49,8 @@ export class MockActivityFetcher extends IActivityFetcher {
     }
 
     async getActivityForUser(user) {
-        const suitableActivity = findSuitableActivity(this.mockResponses, user);
-        if (suitableActivity) {
-            return suitableActivity;
+        if (this.mockResponses[user.name]) {
+            return this.mockResponses[user.name];
         }
         throw new Error('No suitable activity found');
     }
