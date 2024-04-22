@@ -5,6 +5,8 @@ import { findSuitableActivity } from './serverUtils.js';
 jest.mock('axios');
 jest.mock('./serverUtils');
 
+// As this test talks to a 3rd party service, using both RemoteActivityFetcher and findSuitableActivity, it's not *strictly* a unit test.
+// I'm keeping this integration-focused test in the interest of test coverage
 describe('ActivityFetcher', () => {
     describe('RemoteActivityFetcher', () => {
         const url = 'https://www.boredapi.com/api/activity';
