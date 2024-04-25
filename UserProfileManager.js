@@ -10,6 +10,10 @@ class IUserProfileManager {
     clearProfiles() {
         throw new Error("Method not implemented.");
     }
+
+    getTargetUser(username) {
+        throw new Error("Method not implemented.");
+    }
 }
 
 class InMemoryUserProfileManager extends IUserProfileManager {
@@ -30,6 +34,12 @@ class InMemoryUserProfileManager extends IUserProfileManager {
 
     clearProfiles() {
         this.userProfiles = [];
+    }
+
+    getTargetUser(username) {
+        return this.userProfiles.find(profile => {
+            return profile.name == username;
+        });
     }
 }
 

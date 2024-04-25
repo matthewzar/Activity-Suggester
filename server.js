@@ -39,7 +39,7 @@ export class Server {
     async getActivity(req, res) {
         try {
             // Attempt to retrieve the current user's profile
-            const currentUser = this.profileManager.getLastUserProfile();
+            const currentUser = this.getTargetUser(req) 
             if (!currentUser) {
                 return res.status(404).send('No user profiles available');
             }
@@ -58,6 +58,13 @@ export class Server {
             }
         }
     }
+
+    getTargetUser(req) {
+        if (req.query.username) return this.profileManager.getTargetUser(req.query.username)
+        return this.profileManager.getLastUserProfile();
+    }
+
+    
 
     listen(port, callback) {
         this.app.listen(port, callback);
