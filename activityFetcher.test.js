@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { RemoteActivityFetcher } from './activityFetcher.js';
-import { findSuitableActivity } from './serverUtils.js';
+import { findSuitableActivity, invertAccessibility } from './serverUtils.js';
 
 jest.mock('axios');
 jest.mock('./serverUtils');
@@ -13,18 +13,19 @@ describe('ActivityFetcher', () => {
         let remoteFetcher;
 
         beforeEach(() => {
-            remoteFetcher = new RemoteActivityFetcher(url);
+            remoteFetcher = new RemoteActivityFetcher(url, 1);
         });
 
         it('returns a suitable activity when found', async () => {
-            const mockUser = { accessibility: 'High', price: 'Free' };
+            const mockUser = { name:"Tim", accessibility: 'Medium', price: 'Low' };
             const mockActivity = {
-                accessibility: 0.2,
+                accessibility: 0.5,
                 price: 0,
-                activity: 'Reading'
+                activity: 'Cycling'
             };
             axios.get.mockResolvedValue({ data: mockActivity });
             findSuitableActivity.mockReturnValue(mockActivity);
+            invertAccessibility.mockReturnValue( { minAccessibility: 0.25, maxAccessibility: 0.75 } )
 
             const activity = await remoteFetcher.getActivityForUser(mockUser);
             expect(activity).toEqual(mockActivity);
