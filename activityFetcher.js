@@ -17,7 +17,7 @@ export class RemoteActivityFetcher extends IActivityFetcher {
     }
 
     async getActivityForUser(user) {        
-        for (let i = 0; i < this.maxRetries; i++) {
+        for (let i = 0; i <= this.maxRetries; i++) {
             try {
                 const thing = invertAccessibility(user.accessibility);
                 const { minAccessibility, maxAccessibility } = thing
