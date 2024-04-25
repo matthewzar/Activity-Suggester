@@ -15,8 +15,25 @@ export class Server {
     }
 
     setupRoutes() {
+        // Includes optional query params
         this.app.post('/user', this.createUser.bind(this));
         this.app.get('/activity', this.getActivity.bind(this));
+        // Includes none-optional 
+        this.app.delete('/user/:name', this.deleteUser.bind(this));
+    }
+
+    deleteUser(req, res) {
+        const { name } = req.params; 
+        if (!name) {
+            return res.status(400).send('User name is required');
+        }
+
+        if (this.profileManager.deleteUserProfile(name)) {
+            return res.status(204).end();
+        }
+        
+        // Arguably this should be more generic, to prevent unauthorized deleters from getting info about what users exist
+        res.status(404).send("Operation incomplete")
     }
 
     createUser(req, res) {

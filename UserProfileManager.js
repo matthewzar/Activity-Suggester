@@ -14,6 +14,10 @@ class IUserProfileManager {
     getTargetUser(username) {
         throw new Error("Method not implemented.");
     }
+
+    deleteUserProfile(username) {
+        throw new Error("Method not implemented.");
+    }
 }
 
 class InMemoryUserProfileManager extends IUserProfileManager {
@@ -40,6 +44,17 @@ class InMemoryUserProfileManager extends IUserProfileManager {
         return this.userProfiles.find(profile => {
             return profile.name == username;
         });
+    }
+
+    deleteUserProfile(username) {        
+        const removeIndex = this.userProfiles.findIndex(profile => {
+            return profile.name == username;
+        });
+        if (removeIndex !== -1) { 
+            this.userProfiles.splice(removeIndex, 1);
+            return true; 
+        }
+        return false; 
     }
 }
 
